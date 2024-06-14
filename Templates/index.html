@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memes</title>
+</head>
+<body>
+<form action="/memes/" enctype="multipart/form-data" method="post">
+    <input name="file" type="file" multiple>
+    <input type="submit">
+</form>
+{% for i in files %}
+<a href="/memes/{{ i.id }}">
+    <img src="{{ i.meme }}">
+</a>
+<button onclick="put_meme({{ i.id }});">+</button>
+<button onclick="delete_meme({{ i.id }});">-</button>
+{% endfor %}
+</body>
+<script>
+    function put_meme(id) {
+        fetch('http://127.0.0.1:8000/memes/' + id.toString(), {method: 'PUT'})
+    }
+
+    function delete_meme(id) {
+        fetch('http://127.0.0.1:8000/memes/' + id.toString(), {method: 'DELETE'})
+    }
+
+</script>
+</html>
